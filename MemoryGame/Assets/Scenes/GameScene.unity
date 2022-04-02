@@ -206,7 +206,6 @@ Transform:
   m_Children:
   - {fileID: 808371483}
   - {fileID: 1998158589}
-  - {fileID: 1771277354}
   - {fileID: 799159774}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -240,7 +239,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 531505291}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &808371482
 GameObject:
@@ -284,37 +283,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4667c4ef7c4fcb842b0393262bf6148c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1771277353
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1771277354}
-  m_Layer: 0
-  m_Name: BRCorner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1771277354
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1771277353}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: -3.75, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 531505291}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1998158588
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,8 +359,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   game: {fileID: 1086256858}
-  rows: 10
+  rows: 6
   cols: 6
+  match: 2
   _usedScale: 1
   _topLeft: {fileID: 808371483}
   _topRight: {fileID: 1998158589}
@@ -400,6 +369,7 @@ MonoBehaviour:
   _gapPerc: 0.1
   _cardOrigDim: 2.2
   cardPrefab: {fileID: 9035023548617354740, guid: 332471a57d27f6f43ac02e149c90a781, type: 3}
+  orderedCards: 
 --- !u!1001 &3937923225030159760
 PrefabInstance:
   m_ObjectHideFlags: 0
