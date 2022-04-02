@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour
     public int rowNum;
     public int colNum;
     public int matchNum;
+    public string cardSkin = "animals_";
+    public string backSkin = "back_1";
+
     public List<int> cardSet;
 
     private void Awake()

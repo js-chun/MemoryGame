@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CardManager : MonoBehaviour
 {
-    public GameManager game;
+    private GameManager game;
+
     public int rows = 4;
     public int cols = 2;
     public int match = 2;
@@ -13,12 +14,12 @@ public class CardManager : MonoBehaviour
     public Transform _topLeft;
     public Transform _topRight;
     public Transform _bottomLeft;
-    public float _gapPerc = 0.1f;
-    public float _cardOrigDim = 2.2f;
+    private float _gapPerc = 0.1f;
+    private float _cardOrigDim = 2.2f;
 
     public GameObject cardPrefab;
     public List<int> orderedCards;
-    // Start is called before the first frame update
+    
     void Start()
     {
         game = FindObjectOfType<GameManager>();
@@ -115,7 +116,6 @@ public class CardManager : MonoBehaviour
         
         while (orderedCards.Count < totalCards)
         {
-            Debug.Log(orderedCards.Count);
             int randomCard = Random.Range(1, setCards + 1);
             int numUsed = valuesUsed[randomCard - 1];
 
