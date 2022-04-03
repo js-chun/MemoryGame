@@ -28,16 +28,14 @@ public class CardManager : MonoBehaviour
         cols = gameSettings.colNum;
         rows = gameSettings.rowNum;
         match = gameSettings.matchNum;
+        gameSettings.gameStart();
 
         Camera camera = Camera.main;
         float _halfHeight = camera.orthographicSize;
         float _halfWidth = camera.aspect * _halfHeight;
-
         _useHeight = 0.8f * 2 * _halfHeight;
         _useWidth = 0.95f * 2 * _halfWidth;
-
         _heightMax = _halfHeight - 0.12f * _halfHeight;
-
         float _widthMax = 0.95f * _halfWidth;
         _widthMin = -_widthMax;
 
@@ -46,7 +44,7 @@ public class CardManager : MonoBehaviour
 
     private void Update()
     {
-        
+        repeatState();
     }
     //Spawns cards in a set area spaced out and scaled according to rows and columns of cards
     private void spawnCards()
@@ -185,6 +183,17 @@ public class CardManager : MonoBehaviour
         }
 
 
+    }
+
+    private void repeatState()
+    {
+        if(gameSettings.gameMode != 0)
+        {
+            if (gameSettings.numCards <= 0)
+            {
+                spawnCards();
+            }
+        }
     }
 
 }

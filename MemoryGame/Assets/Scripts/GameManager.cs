@@ -20,10 +20,11 @@ public class GameManager : MonoBehaviour
     public Card cardThree;
     public bool canCheck;
     public bool canClickCards;
-
-    public int score;
-    public int time;
+    public bool isPlaying;
+    public int pairsMatched;
+    public float time;
     public int numCards;
+    public int numTries;
 
     private void Awake()
     {
@@ -46,7 +47,11 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        checkCards();
+        if (isPlaying)
+        {
+            gameState();
+            checkCards();
+        }
     }
 
     public void setGameSettings(string modeData)
@@ -64,12 +69,15 @@ public class GameManager : MonoBehaviour
         colNum = 0;
         numRevealed = 0;
         matchNum = 0;
+        numCards = 0;
         canCheck = false;
         canClickCards = false;
         cardOne = null;
         cardTwo = null;
         cardThree = null;
-        score = 0;
+        pairsMatched = 0;
+        isPlaying = false;
+        numTries = 100;
     }
 
     private void checkCards()
@@ -131,6 +139,15 @@ public class GameManager : MonoBehaviour
         cardThree = null;
         numRevealed = 0;
         canClickCards = true;
+        pairsMatched += 1;
+        if (gameMode == 1)
+        {
+            numTries -= 1;
+        }
+        else
+        {
+            numTries += 1;
+        }
     }
 
     private IEnumerator noMatchResult()
@@ -144,12 +161,57 @@ public class GameManager : MonoBehaviour
         cardThree = null;
         numRevealed = 0;
         canClickCards = true;
+        if (gameMode == 1)
+        {
+            numTries -= 1;
+        }
+        else
+        {
+            numTries += 1;
+        }
     }
 
+    public void gameStart()
+    {
+        if (gameMode == 0)
+        {
+            time = 0f;
+            numTries = 0;
+        }
+        else if (gameMode == 1)
+        {
+            time = 0f;
+            numTries = 100;
+        }
+        else if (gameMode == 2) 
+        { 
+            time = 180f;
+            numTries = 0;
+        }
+        isPlaying = true;
+        pairsMatched = 0;
+    }
+
+    private void gameState()
+    {
+        if (gameMode == 2)
+        {
+            time -= Time.deltaTime;
+            if (time == 0) { gameOver(); }
+        }
+        else
+        {
+            time += Time.deltaTime;
+            
+            if(gameMode == 1)
+            {
+                if (numTries <= 0) { gameOver(); }
+            }
+        }
+    }
 
     private void gameOver()
     {
-
+        canClickCards = false;
     }
-
 }
