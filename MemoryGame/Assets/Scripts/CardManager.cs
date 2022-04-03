@@ -90,7 +90,7 @@ public class CardManager : MonoBehaviour
                 }
                 yPos = yPos - _yskip;
 
-                GameObject newCard = Instantiate(cardPrefab, new Vector2(xPos, yPos), Quaternion.identity);
+                GameObject newCard = Instantiate(cardPrefab, new Vector2(xPos, yPos), Quaternion.identity,transform);
                 newCard.transform.localScale = new Vector2(_usedScale,_usedScale);
 
                 newCard.GetComponent<Card>().cardValue = orderedCards[cardNum];

@@ -38,7 +38,7 @@ public class Card : MonoBehaviour
 
     private void cardState()
     {
-        if (isRevealed)
+        if (isRevealed == true)
         {
             spriteR.sprite = cSkin;
         }
@@ -50,6 +50,47 @@ public class Card : MonoBehaviour
 
     private void OnMouseDown()
     {
-        isRevealed = !isRevealed;
+        if (game.canClickCards)
+        {
+            if (game.numRevealed < game.matchNum)
+            {
+                if (isRevealed == false)
+                {
+                    game.numRevealed = game.numRevealed + 1;
+                    isRevealed = true;
+                    returnCard();
+                }
+            }
+        }
     }
+
+    private void returnCard()
+    {
+        if (game.cardOne == null)
+        {
+            game.cardOne = this;
+            
+        }
+        else
+        {
+            if (game.matchNum == 2)
+            {
+                game.cardTwo = this;
+                game.canCheck = true;
+            }
+            else if (game.matchNum == 3)
+            {
+                if (game.cardTwo == null)
+                {
+                    game.cardTwo = this;
+                }
+                else
+                {
+                    game.cardThree = this;
+                    game.canCheck = true;
+                }
+            }
+        }
+    }
+
 }
