@@ -5,21 +5,26 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private float waitTime = 0.5f;
+
     public int rowNum;
     public int colNum;
-    public int matchNum = 2;
+    public int matchNum;
+    public int gameMode;
     public string cardSkin = "animals_";
     public string backSkin = "back_1";
 
     public int numRevealed = 0;
-
     public Card cardOne;
     public Card cardTwo;
     public Card cardThree;
     public bool canCheck;
     public bool canClickCards;
 
-    private float waitTime = 0.5f;
+    public int score;
+    public int time;
+    public int numCards;
+
     private void Awake()
     {
         int sessionCount = FindObjectsOfType<GameManager>().Length;
@@ -35,14 +40,8 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        numRevealed = 0;
-        matchNum = 2;
-        canCheck = false;
-        canClickCards = true;
-
-        cardOne = null;
-        cardTwo = null;
-        cardThree = null;
+        gameMode = 0;
+        resetGameSettings();
     }
 
     void Update()
@@ -50,24 +49,32 @@ public class GameManager : MonoBehaviour
         checkCards();
     }
 
-    public void gameModeSelect(string modeData)
+    public void setGameSettings(string modeData)
     {
         string[] splitData = modeData.Split(',');
         colNum = int.Parse(splitData[0]);
         rowNum = int.Parse(splitData[1]);
         matchNum = int.Parse(splitData[2]);
-        Debug.Log(colNum + "x" + rowNum + ". Match " + matchNum);
-        StartCoroutine(loadPlay());
+        canClickCards = true;
     }
 
-    private IEnumerator loadPlay()
+    public void resetGameSettings()
     {
-        yield return new WaitForSeconds(2f);
-        SceneManager.LoadScene("GameScene");
+        rowNum = 0;
+        colNum = 0;
+        numRevealed = 0;
+        matchNum = 0;
+        canCheck = false;
+        canClickCards = false;
+        cardOne = null;
+        cardTwo = null;
+        cardThree = null;
+        score = 0;
     }
 
     private void checkCards()
     {
+        numCards = FindObjectsOfType<Card>().Length;
         if (numRevealed >= matchNum)
         {
             canClickCards = false;
@@ -138,4 +145,11 @@ public class GameManager : MonoBehaviour
         numRevealed = 0;
         canClickCards = true;
     }
+
+
+    private void gameOver()
+    {
+
+    }
+
 }
