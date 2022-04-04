@@ -7,6 +7,9 @@ public class Loader : MonoBehaviour
     private GameManager game;
     public float loadTime = 0.1f;
 
+    public GameObject pauseScreen;
+    private bool prevClickState;
+
     private void Start()
     {
         game = FindObjectOfType<GameManager>();
@@ -24,15 +27,42 @@ public class Loader : MonoBehaviour
         SceneManager.LoadScene("GameScene");
     }
 
-    public void goToMenu()
+    public void goToMenuFromGame()
+    {
+        StartCoroutine(loadMenu());
+        game.resetGameSettings();
+    }
+
+    public void goToMenuFromSettings()
     {
         StartCoroutine(loadMenu());
     }
 
     private IEnumerator loadMenu()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
         SceneManager.LoadScene("MenuScene");
-        game.resetGameSettings();
     }
+
+    public void goToSettings()
+    {
+        StartCoroutine(loadSettings());
+    }
+
+    private IEnumerator loadSettings()
+    {
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadScene("SettingsScene");
+    }
+
+    public void pauseGame(bool pauseIt)
+    {
+        if (pauseIt) { prevClickState = game.canClickCards; }
+        game.pauseState(pauseIt, prevClickState);
+        if (pauseScreen != null)
+        {
+            pauseScreen.SetActive(pauseIt);
+        }
+    }
+
 }

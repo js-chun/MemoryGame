@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -213,5 +212,21 @@ public class GameManager : MonoBehaviour
     private void gameOver()
     {
         canClickCards = false;
+    }
+
+    public void pauseState(bool isPaused, bool prevClickState)
+    {
+        if (isPaused)
+        {
+            isPlaying = false;
+            canClickCards = false;
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            isPlaying = true;
+            canClickCards = prevClickState;
+            Time.timeScale = 1f;
+        }
     }
 }
