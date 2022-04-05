@@ -8,14 +8,14 @@ public class GMToggler : MonoBehaviour
     private GameManager game;
 
     public int gMode;
+    public bool isBackSkin;
+    public string skinName;
 
-    // Start is called before the first frame update
     void Start()
     {
         game = FindObjectOfType<GameManager>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         checkOn();
@@ -23,18 +23,74 @@ public class GMToggler : MonoBehaviour
 
     private void checkOn()
     {
-        if (gMode == game.gameMode)
+        if (gMode >= 0)
         {
-            this.GetComponent<Image>().color = new Color(1f, 1f, 1f);
+            if (gMode == game.gameMode)
+            {
+                onColor();
+            }
+            else
+            {
+                offColor();
+            }
         }
         else
         {
-            this.GetComponent<Image>().color = new Color(0.7843137f, 0.7843137f, 0.7843137f);
+            if (isBackSkin)
+            {
+                if (skinName == game.backSkin)
+                {
+                    onColor();
+                }
+                else
+                {
+                    offColor();
+                }
+            }
+            else
+            {
+                if (skinName == game.cardSkin)
+                {
+                    onColor();
+                }
+                else
+                {
+                    offColor();
+                }
+            }
         }
+    }
+
+    private void onColor()
+    {
+        this.GetComponent<Image>().color = new Color(1f, 1f, 1f);
+    }
+
+    private void offColor()
+    {
+        this.GetComponent<Image>().color = new Color(0.3773585f, 0.3773585f, 0.3773585f);
     }
 
     public void switchMode()
     {
-        game.gameMode = gMode;
+        if (gMode >= 0)
+        {
+            game.gameMode = gMode;
+        }
     }
+
+    public void switchCardSkin()
+    {
+        if (isBackSkin)
+        {
+            game.backSkin = skinName;
+            PlayerPrefsController.SetBackSkin(skinName);
+        }
+        else
+        {
+            game.cardSkin = skinName;
+            PlayerPrefsController.SetFrontSkin(skinName);
+        }
+    }
+
 }

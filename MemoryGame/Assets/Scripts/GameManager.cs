@@ -10,8 +10,8 @@ public class GameManager : MonoBehaviour
     public int colNum;
     public int matchNum;
     public int gameMode;
-    public string cardSkin = "animals_";
-    public string backSkin = "back_1";
+    public string cardSkin;
+    public string backSkin;
 
     public int numRevealed = 0;
     public Card cardOne;
@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+        getDefaultSettings();
         gameMode = 0;
         resetGameSettings();
     }
@@ -50,6 +51,31 @@ public class GameManager : MonoBehaviour
         {
             gameState();
             checkCards();
+        }
+    }
+
+    private void getDefaultSettings()
+    {
+        string skin = PlayerPrefsController.GetFrontSkin();
+        List<string> skinsList = new List<string>() { "animals_", "farm_", "fashion_", "veggies_", "flags_", "music_", "korea_", "nature_" };
+        if (skinsList.Contains(skin))
+        {
+            cardSkin = skin;
+        }
+        else
+        {
+            cardSkin = "animals_";
+        }
+        skin = PlayerPrefsController.GetBackSkin();
+        skinsList.Clear();
+        skinsList = new List<string>() { "back_1", "back_2", "back_3", "back_4" };
+        if (skinsList.Contains(skin))
+        {
+            backSkin = skin;
+        }
+        else
+        {
+            backSkin = "back_1";
         }
     }
 

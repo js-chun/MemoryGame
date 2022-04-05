@@ -22,7 +22,7 @@ public class Card : MonoBehaviour
     {
         game = FindObjectOfType<GameManager>();
         spriteR = gameObject.GetComponent<SpriteRenderer>();
-        cSkinPath = game.cardSkin + '/' + game.cardSkin + cardValue ;
+        cSkinPath = "front_/" + game.cardSkin + '/' + game.cardSkin + cardValue ;
         bSkinPath = "back_/" + game.backSkin;
 
         bSkin = Resources.Load<Sprite>(bSkinPath);

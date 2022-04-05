@@ -36,6 +36,7 @@ public class Loader : MonoBehaviour
     public void goToMenuFromSettings()
     {
         StartCoroutine(loadMenu());
+        PlayerPrefs.Save();
     }
 
     private IEnumerator loadMenu()

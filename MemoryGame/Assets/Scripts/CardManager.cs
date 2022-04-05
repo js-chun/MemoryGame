@@ -150,39 +150,40 @@ public class CardManager : MonoBehaviour
     private void randomCards()
     {
         int totalCards = rows * cols;
-        int setCards = totalCards / match;
-        orderedCards.Clear();
-
-        List<int> valuesUsed = new List<int>();
-
-        for (int i = 0; i < setCards; i++)
+        if (match > 0)
         {
-            valuesUsed.Add(0);
-        }
+            int setCards = totalCards / match;
+            orderedCards.Clear();
 
+            List<int> valuesUsed = new List<int>();
 
-        while (orderedCards.Count < totalCards)
-        {
-            int randomCard = Random.Range(1, setCards + 1);
-            int numUsed = valuesUsed[randomCard - 1];
-
-            if (orderedCards.Contains(randomCard))
+            for (int i = 0; i < setCards; i++)
             {
+                valuesUsed.Add(0);
+            }
 
-                if (numUsed < match)
+
+            while (orderedCards.Count < totalCards)
+            {
+                int randomCard = Random.Range(1, setCards + 1);
+                int numUsed = valuesUsed[randomCard - 1];
+
+                if (orderedCards.Contains(randomCard))
+                {
+
+                    if (numUsed < match)
+                    {
+                        orderedCards.Add(randomCard);
+                        valuesUsed[randomCard - 1] = numUsed + 1;
+                    }
+                }
+                else
                 {
                     orderedCards.Add(randomCard);
                     valuesUsed[randomCard - 1] = numUsed + 1;
                 }
             }
-            else
-            {
-                orderedCards.Add(randomCard);
-                valuesUsed[randomCard - 1] = numUsed + 1;
-            }
         }
-
-
     }
 
     private void repeatState()
