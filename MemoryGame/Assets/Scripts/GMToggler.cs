@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GMToggler : MonoBehaviour
 {
     private GameManager game;
+    private MusicPlayer audioP;
 
     public int gMode;
     public bool isBackSkin;
@@ -14,6 +15,7 @@ public class GMToggler : MonoBehaviour
     void Start()
     {
         game = FindObjectOfType<GameManager>();
+        audioP = FindObjectOfType<MusicPlayer>();
     }
 
     void Update()
@@ -34,7 +36,7 @@ public class GMToggler : MonoBehaviour
                 offColor();
             }
         }
-        else
+        else if (gMode == -1)
         {
             if (isBackSkin)
             {
@@ -59,6 +61,18 @@ public class GMToggler : MonoBehaviour
                 }
             }
         }
+        else if(gMode == -2)
+        {
+            float onOrOff = PlayerPrefsController.GetMusicOnOff();
+            if (onOrOff == 1f)
+            {
+                onColor();
+            }
+            else
+            {
+                offColor();
+            }
+        }
     }
 
     private void onColor()
@@ -75,22 +89,46 @@ public class GMToggler : MonoBehaviour
     {
         if (gMode >= 0)
         {
-            game.gameMode = gMode;
+            if (game.gameMode != gMode)
+            {
+                audioP.playSound("select");
+                game.gameMode = gMode;
+            }
         }
     }
 
     public void switchCardSkin()
     {
-        if (isBackSkin)
+        if (gMode == -1)
         {
-            game.backSkin = skinName;
-            PlayerPrefsController.SetBackSkin(skinName);
-        }
-        else
-        {
-            game.cardSkin = skinName;
-            PlayerPrefsController.SetFrontSkin(skinName);
+            if (isBackSkin)
+            {
+                if (game.backSkin != skinName)
+                {
+                    audioP.playSound("select");
+                    game.backSkin = skinName;
+                    PlayerPrefsController.SetBackSkin(skinName);
+                }
+            }
+            else
+            {
+                if (game.cardSkin != skinName)
+                {
+                    audioP.playSound("select");
+                    game.cardSkin = skinName;
+                    PlayerPrefsController.SetFrontSkin(skinName);
+                }
+            }
         }
     }
 
+    public void switchMusic()
+    {
+        if (gMode == -2)
+        {
+            audioP.playSound("select");
+            MusicPlayer mp = FindObjectOfType<MusicPlayer>();
+            mp.turnMusicOnOff();
+        }
+    }
 }

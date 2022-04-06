@@ -2062,6 +2062,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gMode: 2
+  isBackSkin: 0
+  skinName: 
 --- !u!114 &1005846319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2866,6 +2868,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1231318033}
   m_CullTransparentMesh: 1
+--- !u!1001 &1248226936
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7085998792567519297, guid: f72e92909567d1e419f216fe19b7a670, type: 3}
+      propertyPath: m_Name
+      value: MusicPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 7085998792567519308, guid: f72e92909567d1e419f216fe19b7a670, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7085998792567519308, guid: f72e92909567d1e419f216fe19b7a670, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7085998792567519308, guid: f72e92909567d1e419f216fe19b7a670, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7085998792567519308, guid: f72e92909567d1e419f216fe19b7a670, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7085998792567519308, guid: f72e92909567d1e419f216fe19b7a670, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7085998792567519308, guid: f72e92909567d1e419f216fe19b7a670, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7085998792567519308, guid: f72e92909567d1e419f216fe19b7a670, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7085998792567519308, guid: f72e92909567d1e419f216fe19b7a670, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7085998792567519308, guid: f72e92909567d1e419f216fe19b7a670, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7085998792567519308, guid: f72e92909567d1e419f216fe19b7a670, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7085998792567519308, guid: f72e92909567d1e419f216fe19b7a670, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f72e92909567d1e419f216fe19b7a670, type: 3}
 --- !u!1 &1294422439
 GameObject:
   m_ObjectHideFlags: 0
@@ -3173,6 +3232,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gMode: 0
+  isBackSkin: 0
+  skinName: 
 --- !u!114 &1490029488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4998,6 +5059,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gMode: 1
+  isBackSkin: 0
+  skinName: 
 --- !u!114 &2133234200
 MonoBehaviour:
   m_ObjectHideFlags: 0

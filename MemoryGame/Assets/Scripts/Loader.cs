@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 public class Loader : MonoBehaviour
 {
     private GameManager game;
+    private MusicPlayer audioP;
+
     public float loadTime = 0.1f;
 
     public GameObject pauseScreen;
@@ -13,6 +15,7 @@ public class Loader : MonoBehaviour
     private void Start()
     {
         game = FindObjectOfType<GameManager>();
+        audioP = FindObjectOfType<MusicPlayer>();
     }
 
     public void goToGame(string str_setting)
@@ -23,6 +26,7 @@ public class Loader : MonoBehaviour
 
     private IEnumerator loadPlay()
     {
+        audioP.playSound("select");
         yield return new WaitForSeconds(0.5f);
         SceneManager.LoadScene("GameScene");
     }
@@ -30,7 +34,6 @@ public class Loader : MonoBehaviour
     public void goToMenuFromGame()
     {
         StartCoroutine(loadMenu());
-        game.resetGameSettings();
     }
 
     public void goToMenuFromSettings()
@@ -41,8 +44,10 @@ public class Loader : MonoBehaviour
 
     private IEnumerator loadMenu()
     {
+        audioP.playSound("select");
         yield return new WaitForSeconds(0.5f);
         SceneManager.LoadScene("MenuScene");
+        game.resetGameSettings();
     }
 
     public void goToSettings()
@@ -52,13 +57,19 @@ public class Loader : MonoBehaviour
 
     private IEnumerator loadSettings()
     {
+        audioP.playSound("select");
         yield return new WaitForSeconds(0.5f);
         SceneManager.LoadScene("SettingsScene");
     }
 
     public void pauseGame(bool pauseIt)
     {
-        if (pauseIt) { prevClickState = game.canClickCards; }
+        if (pauseIt) 
+        {
+            audioP.playSound("pause_in");
+            prevClickState = game.canClickCards; 
+        }
+        else { audioP.playSound("pause_out"); }
         game.pauseState(pauseIt, prevClickState);
         if (pauseScreen != null)
         {

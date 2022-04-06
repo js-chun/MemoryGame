@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Card : MonoBehaviour
 {
     private GameManager game;
+    private MusicPlayer audioP;
     public int cardValue;
 
     private string bSkinPath;
@@ -21,6 +22,7 @@ public class Card : MonoBehaviour
     void Start()
     {
         game = FindObjectOfType<GameManager>();
+        audioP = FindObjectOfType<MusicPlayer>();
         spriteR = gameObject.GetComponent<SpriteRenderer>();
         cSkinPath = "front_/" + game.cardSkin + '/' + game.cardSkin + cardValue ;
         bSkinPath = "back_/" + game.backSkin;
@@ -56,6 +58,7 @@ public class Card : MonoBehaviour
             {
                 if (isRevealed == false)
                 {
+                    audioP.playSound("select");
                     game.numRevealed = game.numRevealed + 1;
                     isRevealed = true;
                     returnCard();

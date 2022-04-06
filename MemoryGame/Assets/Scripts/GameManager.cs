@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private MusicPlayer audioP;
     private float waitTime = 0.5f;
 
     public int rowNum;
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+        audioP = FindObjectOfType<MusicPlayer>();
         getDefaultSettings();
         gameMode = 0;
         resetGameSettings();
@@ -173,6 +175,7 @@ public class GameManager : MonoBehaviour
         {
             numTries += 1;
         }
+        audioP.playSound("correct");
     }
 
     private IEnumerator noMatchResult()
@@ -194,6 +197,7 @@ public class GameManager : MonoBehaviour
         {
             numTries += 1;
         }
+        audioP.playSound("error");
     }
 
     public void gameStart()
@@ -238,6 +242,20 @@ public class GameManager : MonoBehaviour
     private void gameOver()
     {
         canClickCards = false;
+        isPlaying = false;
+
+        if (gameMode == 0)
+        {
+
+        }
+        else if (gameMode == 1)
+        {
+            
+        }
+        else if (gameMode == 2)
+        {
+
+        }
     }
 
     public void pauseState(bool isPaused, bool prevClickState)
