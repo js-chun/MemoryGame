@@ -8,7 +8,7 @@ public class SFXPlayer : MonoBehaviour
     public float masterVolume = 0.3f;
     void Start()
     {
-        playSoundOnce();
+        StartCoroutine(playSoundOnce());
     }
 
     private IEnumerator playSoundOnce()
@@ -16,6 +16,6 @@ public class SFXPlayer : MonoBehaviour
         sfxSound = GetComponent<AudioSource>();
         sfxSound.volume = PlayerPrefsController.GetMusicOnOff() * masterVolume;
         yield return new WaitForSeconds(0.2f);
-        GameObject.Destroy(this);
+        Destroy(this.gameObject);
     }
 }

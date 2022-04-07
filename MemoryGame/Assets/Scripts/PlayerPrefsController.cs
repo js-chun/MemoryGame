@@ -139,8 +139,8 @@ public class PlayerPrefsController : MonoBehaviour
         {
             if (match == 2)
             {
-                if(numCards == 8) { hsParse = PlayerPrefs.GetString(HIGHSCORE_G1_N1_M2); }
-                else if(numCards == 16) { hsParse = PlayerPrefs.GetString(HIGHSCORE_G1_N2_M2); }
+                if (numCards == 8) { hsParse = PlayerPrefs.GetString(HIGHSCORE_G1_N1_M2); }
+                else if (numCards == 16) { hsParse = PlayerPrefs.GetString(HIGHSCORE_G1_N2_M2); }
                 else if (numCards == 24) { hsParse = PlayerPrefs.GetString(HIGHSCORE_G1_N3_M2); }
                 else if (numCards == 36) { hsParse = PlayerPrefs.GetString(HIGHSCORE_G1_N4_M2); }
                 else if (numCards == 48) { hsParse = PlayerPrefs.GetString(HIGHSCORE_G1_N5_M2); }
@@ -196,8 +196,20 @@ public class PlayerPrefsController : MonoBehaviour
             }
         }
         string[] parseS = hsParse.Split(",");
-        hsParse = parseS[type];
-        int hsNum = int.Parse(hsParse);
+        int hsNum = 0;
+        if (type == 1)
+        {
+            hsNum = 99999;
+        }
+        else if (type == 2)
+        {
+            hsNum = 99999;
+        }
+        if (parseS.Length == 3)
+        {
+            hsParse = parseS[type];
+            hsNum = int.Parse(hsParse);
+        }
         return hsNum;
     }
 

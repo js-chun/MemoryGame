@@ -47,9 +47,16 @@ public class CardManager : MonoBehaviour
         repeatState();
     }
     //Spawns cards in a set area spaced out and scaled according to rows and columns of cards
-    private void spawnCards()
+    public void spawnCards()
     {
-
+        Card[] cards = FindObjectsOfType<Card>();
+        if (cards.Length > 0)
+        {
+            foreach (Card c in cards)
+            {
+                Destroy(c.gameObject);
+            }
+        }
         //float _xdist = _topRight.position.x - _topLeft.position.x;
         //float _ydist = _topLeft.position.y - _bottomLeft.position.y;
 

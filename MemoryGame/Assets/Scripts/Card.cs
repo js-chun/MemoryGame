@@ -30,7 +30,6 @@ public class Card : MonoBehaviour
         bSkin = Resources.Load<Sprite>(bSkinPath);
         cSkin = Resources.Load<Sprite>(cSkinPath);
         isRevealed = false;
-
     }
 
     void Update()

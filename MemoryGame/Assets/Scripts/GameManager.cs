@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
     public int numCards;
     public int numTries;
 
+    public float timeMode = 30f;
+    public int triesMode = 100;
+
     private void Awake()
     {
         int sessionCount = FindObjectsOfType<GameManager>().Length;
@@ -41,6 +44,12 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+        
+        //PlayerPrefsController.SetHighScore(12, 8, 3, 0, 0, 100);
+        //Debug.Log("score"+ PlayerPrefsController.GetHighScore(0, 8, 2, 0));
+        //Debug.Log("tries" + PlayerPrefsController.GetHighScore(0, 8, 2, 1));
+        //Debug.Log("time" + PlayerPrefsController.GetHighScore(0, 8, 2, 2));
+        
         audioP = FindObjectOfType<MusicPlayer>();
         getDefaultSettings();
         gameMode = 0;
@@ -104,7 +113,7 @@ public class GameManager : MonoBehaviour
         cardThree = null;
         pairsMatched = 0;
         isPlaying = false;
-        numTries = 100;
+        numTries = triesMode;
     }
 
     private void checkCards()
@@ -210,15 +219,26 @@ public class GameManager : MonoBehaviour
         else if (gameMode == 1)
         {
             time = 0f;
-            numTries = 100;
+            numTries = triesMode;
         }
         else if (gameMode == 2) 
         { 
-            time = 180f;
+            time = timeMode;
             numTries = 0;
         }
         isPlaying = true;
+        numRevealed = 0;
         pairsMatched = 0;
+    }
+
+    public void gameRestart()
+    {
+        canClickCards = true;
+        gameStart();
+        Loader ldr = FindObjectOfType<Loader>();
+        ldr.isGameOver(false);
+        CardManager cm = FindObjectOfType<CardManager>();
+        cm.spawnCards();
     }
 
     private void gameState()
@@ -226,7 +246,7 @@ public class GameManager : MonoBehaviour
         if (gameMode == 2)
         {
             time -= Time.deltaTime;
-            if (time == 0) { gameOver(); }
+            if (time <= 0) { gameOver(); }
         }
         else
         {
@@ -236,26 +256,89 @@ public class GameManager : MonoBehaviour
             {
                 if (numTries <= 0) { gameOver(); }
             }
+            else if (gameMode == 0)
+            {
+                if (pairsMatched == (rowNum * colNum) / matchNum)
+                {
+                    gameOver();
+                }
+            }
         }
     }
 
     private void gameOver()
-    {
+    {;
+        Time.timeScale = 0f;
         canClickCards = false;
         isPlaying = false;
+        Loader ldr = FindObjectOfType<Loader>();
+        ldr.isGameOver(true);
+        ldr.wonGame(false);
 
         if (gameMode == 0)
         {
+            int hsTries = PlayerPrefsController.GetHighScore(gameMode, rowNum * colNum, matchNum, 1);
+            int hsTime = PlayerPrefsController.GetHighScore(gameMode, rowNum * colNum, matchNum, 2);
 
+            int curTime = (int)time;
+
+            if (curTime < hsTime) 
+            { 
+                PlayerPrefsController.SetHighScore(gameMode, rowNum * colNum, matchNum, pairsMatched, numTries, curTime);
+                ldr.wonGame(true);
+            }
+            else if (curTime == hsTime)
+            {
+                if (numTries < hsTries) 
+                {
+                    PlayerPrefsController.SetHighScore(gameMode, rowNum * colNum, matchNum, pairsMatched, numTries, curTime);
+                    ldr.wonGame(true);
+                }
+            }
         }
         else if (gameMode == 1)
         {
-            
+            int hsMatches = PlayerPrefsController.GetHighScore(gameMode, rowNum * colNum, matchNum, 0);
+            int hsTime = PlayerPrefsController.GetHighScore(gameMode, rowNum * colNum, matchNum, 2);
+
+            int curTime = (int)time;
+
+            if (pairsMatched > hsMatches) 
+            {
+                PlayerPrefsController.SetHighScore(gameMode, rowNum * colNum, matchNum, pairsMatched, triesMode, curTime);
+                ldr.wonGame(true);
+            }
+            else if (pairsMatched == hsMatches)
+            {
+                if (curTime < hsTime) 
+                {
+                    PlayerPrefsController.SetHighScore(gameMode, rowNum * colNum, matchNum, pairsMatched, triesMode, curTime);
+                    ldr.wonGame(true);
+                }
+            }
         }
         else if (gameMode == 2)
         {
+            int hsMatches = PlayerPrefsController.GetHighScore(gameMode, rowNum * colNum, matchNum, 0);
+            int hsTries = PlayerPrefsController.GetHighScore(gameMode, rowNum * colNum, matchNum, 2);
 
+            int curTime = (int)timeMode; 
+
+            if (pairsMatched > hsMatches) 
+            {
+                PlayerPrefsController.SetHighScore(gameMode, rowNum * colNum, matchNum, pairsMatched, numTries, curTime);
+                ldr.wonGame(true);
+            }
+            else if (pairsMatched == hsMatches)
+            {
+                if (numTries < hsTries) 
+                {
+                    PlayerPrefsController.SetHighScore(gameMode, rowNum * colNum, matchNum, pairsMatched, numTries, curTime);
+                    ldr.wonGame(true);
+                }
+            }
         }
+
     }
 
     public void pauseState(bool isPaused, bool prevClickState)

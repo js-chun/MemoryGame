@@ -10,12 +10,35 @@ public class Loader : MonoBehaviour
     public float loadTime = 0.1f;
 
     public GameObject pauseScreen;
+    public GameObject gameOverScreen;
+    public GameObject gameOverWin;
+    public GameObject gameOverLose;
     private bool prevClickState;
+    private bool gameOverState;
+    private bool hasWonGame;
 
     private void Start()
     {
         game = FindObjectOfType<GameManager>();
         audioP = FindObjectOfType<MusicPlayer>();
+        gameOverState = false;
+        hasWonGame = false;
+    }
+
+    private void Update()
+    {
+        if (gameOverScreen != null)
+        {
+            gameOverScreen.SetActive(gameOverState);
+        }
+        if (gameOverWin != null && gameOverLose != null)
+        {
+            if (gameOverScreen.activeSelf == true)
+            {
+                gameOverWin.SetActive(hasWonGame);
+                gameOverLose.SetActive(!hasWonGame);
+            }
+        }
     }
 
     public void goToGame(string str_setting)
@@ -33,6 +56,7 @@ public class Loader : MonoBehaviour
 
     public void goToMenuFromGame()
     {
+        Time.timeScale = 1f;
         StartCoroutine(loadMenu());
     }
 
@@ -40,6 +64,18 @@ public class Loader : MonoBehaviour
     {
         StartCoroutine(loadMenu());
         PlayerPrefs.Save();
+    }
+
+    public void playAgainFromGame()
+    {
+        Time.timeScale = 1f;
+        StartCoroutine(playAgain());
+    }
+
+    private IEnumerator playAgain()
+    {
+        yield return new WaitForSeconds(loadTime);
+        game.gameRestart();
     }
 
     private IEnumerator loadMenu()
@@ -64,10 +100,10 @@ public class Loader : MonoBehaviour
 
     public void pauseGame(bool pauseIt)
     {
-        if (pauseIt) 
+        if (pauseIt)
         {
             audioP.playSound("pause_in");
-            prevClickState = game.canClickCards; 
+            prevClickState = game.canClickCards;
         }
         else { audioP.playSound("pause_out"); }
         game.pauseState(pauseIt, prevClickState);
@@ -77,4 +113,13 @@ public class Loader : MonoBehaviour
         }
     }
 
+    public void isGameOver(bool state)
+    {
+        gameOverState = state;
+    }
+
+    public void wonGame(bool state)
+    {
+        hasWonGame = state;
+    }
 }
