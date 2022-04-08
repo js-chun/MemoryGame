@@ -27,6 +27,7 @@ public class Loader : MonoBehaviour
 
     private void Update()
     {
+        screenOt();
         if (gameOverScreen != null)
         {
             gameOverScreen.SetActive(gameOverState);
@@ -122,4 +123,15 @@ public class Loader : MonoBehaviour
     {
         hasWonGame = state;
     }
+
+    private void screenOt()
+    {
+        Screen.autorotateToPortrait = true;
+        Screen.autorotateToPortraitUpsideDown = true;
+        Screen.autorotateToLandscapeLeft = false;
+        Screen.autorotateToLandscapeRight = false;
+
+        Screen.orientation = ScreenOrientation.AutoRotation;
+    }
+
 }

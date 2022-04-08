@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+
         int sessionCount = FindObjectsOfType<GameManager>().Length;
         if (sessionCount > 1)
         {
