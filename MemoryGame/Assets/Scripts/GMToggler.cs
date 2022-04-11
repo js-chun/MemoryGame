@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//class to manage game modes, skins, music as on/off toggles
 public class GMToggler : MonoBehaviour
 {
     private GameManager game;
@@ -23,6 +22,10 @@ public class GMToggler : MonoBehaviour
         checkOn();
     }
 
+    //used to show button as toggle
+    //gmode -1 used for back/front skins
+    //gmode -2 used for music
+    //gmode 0-2 used for actual game modes
     private void checkOn()
     {
         if (gMode >= 0)
@@ -75,16 +78,19 @@ public class GMToggler : MonoBehaviour
         }
     }
 
+    //used to show button as a toggle if selected
     private void onColor()
     {
         this.GetComponent<Image>().color = new Color(1f, 1f, 1f);
     }
 
+    //used to grey out the button as a toggle if not selected
     private void offColor()
     {
         this.GetComponent<Image>().color = new Color(0.3773585f, 0.3773585f, 0.3773585f);
     }
 
+    //switches the game mode on menu scene and greys out the unselected modes in the menu scene
     public void switchMode()
     {
         if (gMode >= 0)
@@ -97,6 +103,7 @@ public class GMToggler : MonoBehaviour
         }
     }
 
+    //switches the back or front card skin and greys out the unselected cards in the settings
     public void switchCardSkin()
     {
         if (gMode == -1)
@@ -122,6 +129,7 @@ public class GMToggler : MonoBehaviour
         }
     }
 
+    //switches the music on or off and greys/ungreys the button based on music on/off
     public void switchMusic()
     {
         if (gMode == -2)

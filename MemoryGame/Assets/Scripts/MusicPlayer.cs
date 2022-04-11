@@ -1,9 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MusicPlayer : MonoBehaviour
 {
+    //class to manage music / sfx
+
     AudioSource audioS;
     public float masterVolume = 0.15f;
     public GameObject select_sfx;
@@ -14,6 +14,7 @@ public class MusicPlayer : MonoBehaviour
 
     private void Awake()
     {
+        //make sure only one MusicPlayer exists at a time
         int sessionCount = FindObjectsOfType<MusicPlayer>().Length;
         if (sessionCount > 1)
         {
@@ -25,14 +26,17 @@ public class MusicPlayer : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
+
     private void Start()
     {
         {
+            //get the locally saved (muted/unmuted) value to play sound or not
             audioS = GetComponent<AudioSource>();
             audioS.volume = PlayerPrefsController.GetMusicOnOff() * masterVolume;
         }
     }
 
+    //turns off sound if previously on or vice versa and saves it in local playerprefs
     public void turnMusicOnOff()
     {
         float onOrOff = PlayerPrefsController.GetMusicOnOff();
@@ -48,6 +52,7 @@ public class MusicPlayer : MonoBehaviour
         }
     }
 
+    //depending on parameter, plays one sound effect based on prefab
     public void playSound(string sfxname)
     {
         if (sfxname == "select") { GameObject SFXPlayer = Instantiate(select_sfx, new Vector3(0f, 0f, 0f), Quaternion.identity,transform); }

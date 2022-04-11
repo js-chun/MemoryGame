@@ -1,7 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//class to spawn cards
 public class CardManager : MonoBehaviour
 {
     private GameManager gameSettings;
@@ -46,9 +46,11 @@ public class CardManager : MonoBehaviour
     {
         repeatState();
     }
+
     //Spawns cards in a set area spaced out and scaled according to rows and columns of cards
     public void spawnCards()
     {
+        //destroys any existing cards before spawning
         Card[] cards = FindObjectsOfType<Card>();
         if (cards.Length > 0)
         {
@@ -57,9 +59,8 @@ public class CardManager : MonoBehaviour
                 Destroy(c.gameObject);
             }
         }
-        //float _xdist = _topRight.position.x - _topLeft.position.x;
-        //float _ydist = _topLeft.position.y - _bottomLeft.position.y;
 
+        //finds out the measurements to use for spawning based on number of rows and columns of cards
         float _xdist = _useWidth;
         float _ydist = _useHeight;
 
@@ -77,9 +78,6 @@ public class CardManager : MonoBehaviour
         {
             _usedScale = _yscale;
         }
-
-        //float xPos = _topLeft.position.x;
-        //float yPos = _topLeft.position.y;
 
         float xPos = _widthMin;
         float yPos = _heightMax;
@@ -110,6 +108,7 @@ public class CardManager : MonoBehaviour
         }
 
 
+        //spawns the cards by cols/rows
         for (int i = 0; i < cols; i++)
         {
             float _xskip;
@@ -117,7 +116,6 @@ public class CardManager : MonoBehaviour
             if (i == 0)
             {
                 _xskip = _xInitialSkip;
-                //xPos = _topLeft.position.x;
                 xPos = _widthMin;
             }
             else
@@ -131,7 +129,6 @@ public class CardManager : MonoBehaviour
                 if (j == 0)
                 {
                     _yskip = _yInitialSkip;
-                    //yPos = _topLeft.position.y;
                     yPos = _heightMax;
                 }
                 else
@@ -193,6 +190,7 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    //spawns cards repeatedly after a whole batch is gone (if not the one match game mode)
     private void repeatState()
     {
         if(gameSettings.gameMode != 0)

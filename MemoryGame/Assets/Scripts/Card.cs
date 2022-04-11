@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Card : MonoBehaviour
 {
@@ -19,6 +16,7 @@ public class Card : MonoBehaviour
 
     public bool isRevealed;
 
+    //loads the right front and back skin from the resources folder
     void Start()
     {
         game = FindObjectOfType<GameManager>();
@@ -37,6 +35,7 @@ public class Card : MonoBehaviour
         cardState();
     }
 
+    //checks if card is revealed or not and loads back skin if not, front skin if true
     private void cardState()
     {
         if (isRevealed == true)
@@ -49,6 +48,7 @@ public class Card : MonoBehaviour
         }
     }
 
+    //reveals card if limit on revealed cards is not met
     private void OnMouseDown()
     {
         if (game.canClickCards)
@@ -66,6 +66,7 @@ public class Card : MonoBehaviour
         }
     }
 
+    //used to check the revealed cards against each other
     private void returnCard()
     {
         if (game.cardOne == null)

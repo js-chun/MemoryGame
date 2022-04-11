@@ -1,7 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//class to manage locally saved settings
 public class PlayerPrefsController : MonoBehaviour
 {
     const string CARD_FRONT_SKIN = "default card front skin";
@@ -44,19 +44,22 @@ public class PlayerPrefsController : MonoBehaviour
     const string HIGHSCORE_G3_N4_M3 = "3min 6x8 match3 high score";
     const string HIGHSCORE_G3_N5_M3 = "3min 6x10 match3 high score";
 
+    //turn on or off local music settings
     public static void SetMusic(bool isVolOn)
     {
         if (isVolOn) { PlayerPrefs.SetFloat(MUSIC_ON_OFF, 1f); }
         else { PlayerPrefs.SetFloat(MUSIC_ON_OFF, 0f); }
     }
 
+    //set the front skin of cards (kept on relaunching the game)
     public static void SetFrontSkin(string skinName)
     {
         List<string> frontSkins = new List<string>() { "animals_", "farm_", "fashion_", "veggies_", "flags_", "music_", "korea_", "nature_" }; 
         if (frontSkins.Contains(skinName)) { PlayerPrefs.SetString(CARD_FRONT_SKIN, skinName); }
         else { Debug.LogError("Skin doesn't exist"); }
     }
-    
+
+    //set the back skin of cards (kept on relaunching the game)
     public static void SetBackSkin(string skinName)
     {
         List<string> backSkins = new List<string>() { "back_1", "back_2", "back_3", "back_4" };
@@ -64,6 +67,7 @@ public class PlayerPrefsController : MonoBehaviour
         else { Debug.LogError("Skin doesn't exist"); }
     }
 
+    //set the high score for a mode/number of cards/match 2or3
     public static void SetHighScore(int gameMode, int numCards, int match, int sesMatches, int sesTries, int sesTime)
     {
         string highScore = sesMatches.ToString() + "," + sesTries.ToString() + "," + sesTime.ToString();
@@ -126,12 +130,16 @@ public class PlayerPrefsController : MonoBehaviour
         }
     }
 
+    //return locally saved front skin
     public static string GetFrontSkin() { return PlayerPrefs.GetString(CARD_FRONT_SKIN); }
 
+    //return locally saved back skin
     public static string GetBackSkin() { return PlayerPrefs.GetString(CARD_BACK_SKIN); }
 
+    //return locally saved setting for music on/off
     public static float GetMusicOnOff() { return PlayerPrefs.GetFloat(MUSIC_ON_OFF); }
 
+    //return locally saved high score for mode/num of cards/match 2or3
     public static int GetHighScore(int gameMode, int numCards, int match, int type)
     {
         string hsParse = "";

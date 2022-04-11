@@ -1,7 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+//class for loading different scenes and screens
 public class Loader : MonoBehaviour
 {
     private GameManager game;
@@ -17,6 +18,7 @@ public class Loader : MonoBehaviour
     private bool gameOverState;
     private bool hasWonGame;
 
+
     private void Start()
     {
         game = FindObjectOfType<GameManager>();
@@ -28,6 +30,9 @@ public class Loader : MonoBehaviour
     private void Update()
     {
         screenOt();
+
+        //loader class might or might not be linked to gameover / high score board screen
+        //below only procs if linked to set the linked screen active
         if (gameOverScreen != null)
         {
             gameOverScreen.SetActive(gameOverState);
@@ -42,12 +47,14 @@ public class Loader : MonoBehaviour
         }
     }
 
+    //used to go to the game from menu scene
     public void goToGame(string str_setting)
     {
         game.setGameSettings(str_setting);
         StartCoroutine(loadPlay());
     }
 
+    //coroutine to go to game scene
     private IEnumerator loadPlay()
     {
         audioP.playSound("select");
@@ -55,30 +62,35 @@ public class Loader : MonoBehaviour
         SceneManager.LoadScene("GameScene");
     }
 
+    //go to menu scene from game scene
     public void goToMenuFromGame()
     {
         Time.timeScale = 1f;
         StartCoroutine(loadMenu());
     }
 
+    //go to menu scene from settings (locally saves setting values)
     public void goToMenuFromSettings()
     {
         StartCoroutine(loadMenu());
         PlayerPrefs.Save();
     }
 
+    //used to restart game from game scene
     public void playAgainFromGame()
     {
         Time.timeScale = 1f;
         StartCoroutine(playAgain());
     }
 
+    //coroutine to restart the game from game scene so player can play again
     private IEnumerator playAgain()
     {
         yield return new WaitForSeconds(loadTime);
         game.gameRestart();
     }
 
+    //coroutine for going to menu scene
     private IEnumerator loadMenu()
     {
         audioP.playSound("select");
@@ -87,18 +99,21 @@ public class Loader : MonoBehaviour
         game.resetGameSettings();
     }
 
+    //coroutine for going to settings scene
     public void goToSettings()
     {
         StartCoroutine(loadSettings());
     }
 
+    //used to go from menu scene to settings scene
     private IEnumerator loadSettings()
     {
         audioP.playSound("select");
         yield return new WaitForSeconds(0.5f);
         SceneManager.LoadScene("SettingsScene");
     }
-
+    
+    //used to pause and unpause game
     public void pauseGame(bool pauseIt)
     {
         if (pauseIt)
@@ -114,16 +129,19 @@ public class Loader : MonoBehaviour
         }
     }
 
+    //used to determine when game is over to set game over screen active
     public void isGameOver(bool state)
     {
         gameOverState = state;
     }
 
+    //used to determine if high score or no high score screen is used at end of game
     public void wonGame(bool state)
     {
         hasWonGame = state;
     }
 
+    //screen orientation is kept portrait or upside down portrait. no landscape orientation
     private void screenOt()
     {
         Screen.autorotateToPortrait = true;

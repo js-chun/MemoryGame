@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//class to manage game and settings for the game session
 public class GameManager : MonoBehaviour
 {
     private MusicPlayer audioP;
@@ -31,7 +32,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-
+        //to make sure only one game manager exists at a time
         int sessionCount = FindObjectsOfType<GameManager>().Length;
         if (sessionCount > 1)
         {
@@ -43,14 +44,9 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
+
     void Start()
     {
-        
-        //PlayerPrefsController.SetHighScore(12, 8, 3, 0, 0, 100);
-        //Debug.Log("score"+ PlayerPrefsController.GetHighScore(0, 8, 2, 0));
-        //Debug.Log("tries" + PlayerPrefsController.GetHighScore(0, 8, 2, 1));
-        //Debug.Log("time" + PlayerPrefsController.GetHighScore(0, 8, 2, 2));
-        
         audioP = FindObjectOfType<MusicPlayer>();
         getDefaultSettings();
         gameMode = 0;
@@ -66,6 +62,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //gets the locally saved front skin and back skin
     private void getDefaultSettings()
     {
         string skin = PlayerPrefsController.GetFrontSkin();
@@ -91,6 +88,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //sets the game mode / number of cards / match 2or3 based on button selected for a single game session
     public void setGameSettings(string modeData)
     {
         string[] splitData = modeData.Split(',');
@@ -100,6 +98,7 @@ public class GameManager : MonoBehaviour
         canClickCards = true;
     }
 
+    //resets all the settings related to a game session
     public void resetGameSettings()
     {
         rowNum = 0;
@@ -117,6 +116,7 @@ public class GameManager : MonoBehaviour
         numTries = triesMode;
     }
 
+    //checks cards revealed against each other to see if they match or not
     private void checkCards()
     {
         numCards = FindObjectsOfType<Card>().Length;
@@ -156,6 +156,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //result if checked cards match, destroys the matched cards
     private IEnumerator matchResult()
     {
         yield return new WaitForSeconds(waitTime);
@@ -188,6 +189,7 @@ public class GameManager : MonoBehaviour
         audioP.playSound("correct");
     }
 
+    //result if checked cards do not match
     private IEnumerator noMatchResult()
     {
         yield return new WaitForSeconds(waitTime);
@@ -210,6 +212,7 @@ public class GameManager : MonoBehaviour
         audioP.playSound("error");
     }
 
+    //starting time/number of tries depending on selected game mode
     public void gameStart()
     {
         if (gameMode == 0)
@@ -232,6 +235,7 @@ public class GameManager : MonoBehaviour
         pairsMatched = 0;
     }
 
+    //used to restart a game from the game scene
     public void gameRestart()
     {
         canClickCards = true;
@@ -242,6 +246,8 @@ public class GameManager : MonoBehaviour
         cm.spawnCards();
     }
 
+    //used to control if time tracked increases or decreases depending on game mode
+    //used to trigger game over state
     private void gameState()
     {
         if (gameMode == 2)
@@ -267,6 +273,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //used to load right game over screen and check/set for high score
     private void gameOver()
     {;
         Time.timeScale = 0f;
@@ -342,6 +349,7 @@ public class GameManager : MonoBehaviour
 
     }
 
+    //used to pause or unpause the game
     public void pauseState(bool isPaused, bool prevClickState)
     {
         if (isPaused)

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -17,15 +15,16 @@ public class LabelManager : MonoBehaviour
         label = this.GetComponent<TextMeshProUGUI>();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        //if label is not for a highscore, will continuously update the value
         if (isHighScore == false)
         {
             updateText(valueType);
         }
         else
         {
+            //if label is for a highscore, will update continuously only if high score section is active
             if (this.isActiveAndEnabled == true)
             {
                 updateHsText(valueType);
@@ -33,6 +32,7 @@ public class LabelManager : MonoBehaviour
         }
     }
 
+    //updates the appropriate text with type of value it is (score, time, number of tries)
     private void updateText(string valueType)
     {
         if (valueType == "score")
@@ -57,6 +57,7 @@ public class LabelManager : MonoBehaviour
         }
     }
 
+    //updates the appropriate high score text with type of valuee it is (score, time, number of tries)
     private void updateHsText(string valueType)
     {
         if (valueType == "score")
