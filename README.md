@@ -1,6 +1,6 @@
 MemoryGame
 
-Matching pairs game made with Korean captions - specifically for Mothers' Day.
+Matching pairs game made with Korean captions - made with Unity and C#
 
 GRAPHICS USED
 -Icons from Flaticon
